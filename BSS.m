@@ -82,6 +82,13 @@ function  [mu, Q] = BSS_fn(returns, factRet, K)
     sigma_ep = 1/(T - p - 1) .* sum(ep .^2, 1);
     D        = diag(sigma_ep);
     
+    % R^2 calculation
+    ybar = mean(returns);
+    SSR = sum(((X * B) - ybar).^2);
+    SST = sum((returns - ybar).^2);
+    r2 = 1 - (SSR./SST);
+    adj_r2 = mean(1 - ((1-r2)*(T-1)/(T-p-1)));
+
     % Factor expected returns and covariance matrix
     f_bar = mean(factRet,1)';
     F     = cov(factRet);
