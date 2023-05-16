@@ -15,7 +15,7 @@ function  x = TPMVO_fn(mu, Q, TC)
     
     % Find the total number of assets
     n = size(Q,1); 
-    
+
     % Set the target as the average expected return of all assets
     targetRet = mean(mu);
     
@@ -25,7 +25,7 @@ function  x = TPMVO_fn(mu, Q, TC)
 
         % Gurobi Setup
 
-    ub = 0.25;
+    ub = 0.10;
     lb = 0;
 
     varTypes = [repmat('C', n, 1); repmat('B', n, 1)];
@@ -45,7 +45,7 @@ function  x = TPMVO_fn(mu, Q, TC)
     model.Q = sparse(Q);
 
     % Linear Objective
-    c_obj = [zeros(n, 1) (1/TC.^2)*ones(n, 1)];
+    c_obj = [zeros(n, 1) TC*ones(n, 1)];
     model.obj = c_obj;
 
     % Contraints
@@ -61,13 +61,11 @@ function  x = TPMVO_fn(mu, Q, TC)
     model.vtype = varTypes;
     
     clear params;
-    params.TimeLimit = 100;
+    params.TimeLimit = 10;
     params.OutputFlag = 0;
     results = gurobi(model,params);
     x = results.x(1:n);
-
-
-    
+  
     %----------------------------------------------------------------------
     
 end
