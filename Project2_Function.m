@@ -1,4 +1,4 @@
-function x = Project2_Function(periodReturns, periodFactRet, x0)
+function [x, r2] = Project2_Function(periodReturns, periodFactRet, x0)
 
     % Use this function to implement your algorithmic asset management
     % strategy. You can modify this function, but you must keep the inputs
@@ -17,12 +17,14 @@ function x = Project2_Function(periodReturns, periodFactRet, x0)
     % for parameter estimation
     returns = periodReturns(end-35:end,:);
     factRet = periodFactRet(end-35:end,:);
-    
-    % Example: Use an OLS regression to estimate mu and Q
-    [mu, Q] = OLS(returns, factRet);
-    
-    % Example: Use MVO to optimize our portfolio
-    x = MVO(mu, Q);
 
+    % Example: Use an OLS regression to estimate mu and Q
+    [mu, Q] = LASSO(returns, factRet, 4);
+
+
+    % Example: Use MVO to optimize our portfolio
+    x = TPMVOV2(mu, Q, 0.01);
+
+   
     %----------------------------------------------------------------------
 end
