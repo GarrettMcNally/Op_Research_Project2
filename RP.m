@@ -1,4 +1,4 @@
-function  [x, RC] = RP_fn(Q)
+function  [x, RC] = RP_fn(mu, Q)
 
     % This function implements the risk parity problem:
     %

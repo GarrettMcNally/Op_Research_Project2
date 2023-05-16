@@ -19,14 +19,11 @@ function x = Project2_Function(periodReturns, periodFactRet, x0)
     factRet = periodFactRet(end-35:end,:);
     
     % Example: Use an OLS regression to estimate mu and Q
-    [mu, Q] = LASSO(returns, factRet, 4);
+    [mu, Q] = OLS(returns, factRet);
     
     % Example: Use MVO to optimize our portfolio
-    alpha = 0.99; %confidence level
-    lambda = 50; %risk aversion coefficient
-    T = size(returns,1);
+    alpha 
     x = robustMVO(mu, Q, lambda, alpha, T);
-    %x = RP(mu,Q);
 
     %----------------------------------------------------------------------
 end
