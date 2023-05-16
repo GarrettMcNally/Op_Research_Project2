@@ -64,7 +64,6 @@ function  x = TPMVO_fn(mu, Q, TC)
     params.TimeLimit = 100;
     params.OutputFlag = 0;
     results = gurobi(model,params);
-    display(results.x)
     x = results.x(1:n);
 
 
